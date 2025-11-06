@@ -1,0 +1,59 @@
+project:
+  type: book
+  output-dir: docs  # 输出目录, 生成的 HTML 文件会放在 docs 目录下
+
+book:
+  title: "Corporate Finance"
+  reader-mode: true 
+  author: "连玉君"
+  date: today
+  date-format: iso
+#  lang: zh  # 不要设置这个，会导致很多问题
+  
+  sidebar:    # 侧边栏配置
+    title: "Corporate Finance"
+    logo: images/book-logo.png
+    logo-href: https://arlionn.github.io/CFinance/
+    style: floating  #docked
+    search: true
+    tools:
+      - icon: github
+        href: https://github.com/arlionn/CFinance
+
+  favicon: images/book-logo.png   # URL logo
+  site-url: https://arlionn.github.io/CFinance/ # 主页地址, 否则点击右上角链接会乱码
+  editor: source    # 始终采用源代码模式编辑
+
+#----------------------- Chapters ---------------
+  chapters:
+
+    - index.md
+
+    - part: "**债券估值**"
+      chapters: 
+        - body/bond-duration-intro.md
+        - body/bond_duration_python_part_1.ipynb
+        - body/bond_duration_python_part_2.ipynb
+
+
+
+format:
+  html:
+    toc: true            # 启用目录
+    toc-depth: 3         # 三级以上 sections 才伸缩
+    theme: cosmo         # 可选：cosmo, flatly, litera, litera, yeti 等  主题模版
+    linestretch: 1.6          # 行间距   1.7   
+    fontsize: 11.5pt          # 字号
+    number-sections: true     # 自动章节编号
+    link-external-newwindow: true
+    highlight: true            # 代码高亮
+    highlight-style: atom-one  # 语法高亮, atom-one, breezy, github, tango, solarized-light
+    code-fold: false           # （可选）代码默认不折叠
+    code-line-numbers: false   # （可选）关闭行号
+    code-overflow: wrap        # 控制长代码的换行   
+    css: styles.css
+    callout-appearance: default        # 启用 callout 默认渲染样式
+    md-extensions:
+      - callout                        # 确保 markdown 支持 callout 块语法
+editor: visual
+

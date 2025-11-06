@@ -1,0 +1,153 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Corporate Finance",
+    "section": "",
+    "text": "0.1 关于这本书\n这本在线电子书是我讲授《公司金融》课程时积累的笔记和代码示例的结集，旨在帮助读者理解公司金融中的核心概念，并通过 Python 代码实现相关的计算和分析。书中的内容涵盖了公司金融的基本理论、财务报表分析、资本预算、风险管理等多个方面。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>前言</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#如何使用本书",
+    "href": "index.html#如何使用本书",
+    "title": "Corporate Finance",
+    "section": "0.2 如何使用本书？",
+    "text": "0.2 如何使用本书？\n这本书是使用 VScode 编辑器 + Quarto 插件编写，进而通过 Github pages 发布的。详情参见 Quarto books。 \n\n你可以 Fork 本书的 github 仓库，然后你的电脑上演练书中的例子。\n你需要做一些基本的配置，参见 安装和环境配置\n书稿中还有不少错漏之处，还请不吝指出：arlionn@163.com。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>前言</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#如何找到我",
+    "href": "index.html#如何找到我",
+    "title": "Corporate Finance",
+    "section": "0.3 如何找到我？",
+    "text": "0.3 如何找到我？\n我最近也在小红书注册了账号 连玉君 (ID: 95085566173)，大家可以在那里留言和讨论。\n\n\n\n主页 | 课程 | 视频 | 推文 | 资料",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>前言</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond-duration-intro.html",
+    "href": "body/bond-duration-intro.html",
+    "title": "2  久期",
+    "section": "",
+    "text": "2.1 引言 —— 为何我们需要关注久期?\n在债券市场中，投资者面临的核心风险有两个：一个是违约风险，另一个是利率风险，后者更为普遍。\n利率的波动会直接导致债券价格的变动，从而影响投资者的资产组合价值。因此，一个至关重要的问题随之而来：\n为了回答这些问题，金融学界引入了一个重要概念 —— 久期 (Duration)。本讲旨在系统性地介绍久期的定义、不同类型、核心应用场景，并结合 Python 编程语言，通过实例演示其计算与应用，帮助学习者从理论到实践全面掌握这一关键工具。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>久期</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond-duration-intro.html#引言-为何我们需要关注久期",
+    "href": "body/bond-duration-intro.html#引言-为何我们需要关注久期",
+    "title": "2  久期",
+    "section": "",
+    "text": "我们如何量化一只债券或一个债券投资组合对利率变化的敏感程度？\n债券价格的变动幅度与利率的变动幅度之间存在着怎样的数学关系？",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>久期</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond-duration-intro.html#久期的概念解析从时间到风险的演进",
+    "href": "body/bond-duration-intro.html#久期的概念解析从时间到风险的演进",
+    "title": "2  久期",
+    "section": "2.2 久期的概念解析——从时间到风险的演进",
+    "text": "2.2 久期的概念解析——从时间到风险的演进\n久期的概念并非一成不变，其内涵从最初的时间度量维度，逐步演化为更为重要的风险度量维度。理解这一演进过程是掌握久期本质的关键。\n\n2.2.1 麦考利久期：加权平均期限\n久期的最初形态由经济学家弗雷德里克·麦考利提出，因此被称为麦考利久期。从其定义上看，麦考利久期是衡量债券投资者收回全部本金和利息所需的加权平均时间。这里的“权重”是每一期现金流（利息或本金）的现值占债券总现值的比重。简单来说，它回答了“平均而言，我需要等多久才能拿回我的钱”这个问题。\n久期的单位是时间，通常以年为单位表示。麦考利久期的计算公式如下：\n\\[\n\\begin{aligned}\nD_{Mac}  & = 1 \\times \\frac{P V\\left(C_1\\right)}{P V}+2 \\times \\frac{P V\\left(C_2\\right)}{P V}+3 \\times \\frac{P V\\left(C_3\\right)}{P V}+\\ldots+T \\times \\frac{P V\\left(C_T\\right)}{P V} \\\\\n& =1 \\times w_1+2 \\times w_2+3 \\times w_3+\\ldots+T \\times w_T\n\\end{aligned}\n\\]\n下面，我们采用较为严谨的方式来定义麦考利久期。\n假设对于一只在未来 \\(T\\) 期内产生现金流 \\(C_1, C_2, ..., C_T\\) 的债券，假设其到期收益率为 \\(y\\)（每期复利），则债券的价格 \\(P\\) 为所有现金流的现值之和：\n\\[\nP = \\sum_{t=1}^{T} \\frac{C_t}{(1+y)^t}\n\\]\n在 \\(t\\) 时刻收到的现金流的现值为 \\(P_t = \\frac{C_t}{(1+y)^t}\\)，其占债券总现值（即价格 \\(P\\)）的权重为：\n\\[\nw_t = \\frac{P_t}{P}\n\\]\n麦考利久期（\\(D_{Mac}\\)）即为这些时间的加权平均值，其数学表达式为：\n\\[\nD_{Mac} = \\sum_{t=1}^{T} t \\cdot w_t = \\sum_{t=1}^{T} t \\cdot \\frac{P_t}{P} = \\frac{1}{P} \\sum_{t=1}^{T} t \\cdot \\frac{C_t}{(1+y)^t} \\tag{1}\n\\]\n对于零息债券而言，由于只在到期日有一笔现金流，其麦考利久期恰好等于其到期期限。而对于附息债券，由于在到期前有利息支付，其麦考利久期总是小于其到期期限。虽然这一时间维度提供了直观的理解，但在现代金融分析中，其应用价值相对有限，更多是作为计算其他类型久期的基础。\n\n\n2.2.2 修正久期：衡量价格-利率敏感度的工具\n修正久期是衡量价格敏感度的重要工具。它度量了当市场利率发生微小变动时，债券价格变动的百分比。\n具体而言，修正久期（\\(D_{Mod}\\)）给出了债券价格与收益率变化之间的近似线性关系。当收益率 \\(y\\) 变动一个微小量 \\(\\Delta y\\) 时，债券价格 \\(P\\) 的近似百分比变动可以表示为：\n\\[\n\\frac{\\Delta P}{P} \\approx -D_{Mod} \\cdot \\Delta y  \\tag{2}\n\\]\n这里的负号至关重要，它揭示了债券价格与收益率之间的反向变动关系：当利率上升时（\\(\\Delta y &gt; 0\\)），债券价格下跌（\\(\\Delta P &lt; 0\\)）；反之亦然。\n修正久期的绝对值越大，说明债券价格对利率变化越敏感，承担的利率风险越高。根据定义，有\n\\[\nD_{Mod} = -\\frac{1}{P}\\frac{\\mathrm d P}{\\mathrm d y} \\approx -\\frac{\\Delta P / P}{\\Delta y} \\tag{3}\n\\]\n因此，\\(D_{Mod}\\) 可以理解为债券价格对收益率的半弹性 (敏感度)，刻画的是收益率每变动一个单位时，债券价格的大致百分比变化。在实际应用中，这一性质非常有用：在利率发生小幅变动且收益率曲线平行移动的假设下，我们可以利用修正久期快速近似计算债券价格的变动幅度（百分比）。\n\n\n\n\n\n\n实例\n\n\n\n在其他市场条件（如债券违约风险、剩余期限、付息频率等）保持不变，且债券对应的年化即期利率仅发生微量变动（通常指变动幅度在 0.1% 以内，符合修正久期 “线性近似” 的适用场景）的前提下，若某债券的修正久期为 4（单位：年），则当该债券的年化即期利率上升 1 个百分点（即 100 个基点） 时，该债券的理论市场价格将近似下降 4% ；反之，若年化即期利率下降 1 个百分点，其理论市场价格将近似上升 4%。\n\n\n修正久期与麦考利久期之间存在直接的数学转换关系。如果债券每年付息 \\(k\\) 次，则修正久期的计算公式为：\n\\[\nD_{Mod} = \\frac{D_{Mac}}{(1 + \\frac{y}{k})} \\tag{4}\n\\]\n这个转换剔除了现金流支付频率的影响，使其在不同债券之间具有更强的可比性。在实务中，当人们提及「久期」而不加限定时，通常指的就是修正久期，因为它直接服务于风险管理的核心目标。\n\n\n2.2.3 有效久期：应对复杂情形的度量\n传统的麦考利久期和修正久期都基于一个关键假设：债券未来的现金流不随市场利率的变化而改变。这一假设对于普通的固定利率债券是成立的，但对于含有内嵌期权的债券 (如可赎回债券或可回售债券) 则不再适用。例如，当利率下降时，可赎回债券很可能被发行人提前赎回，其现金流结构会因此改变。\n在这种情况下，有效久期 应运而生。有效久期通过情景分析来计算，它并不依赖一个固定的现金流序列，而是考察在不同利率情景下债券价格的变动。其计算逻辑如下：\n\\[\nD_{Eff} \\approx \\frac{P_- - P_+}{2 \\cdot P_0 \\cdot \\Delta y} = \\frac{1}{2 P_0}\\cdot \\frac{P_- - P_+}{\\Delta y}\n\\tag{5}\n\\]\n其中：\n\n\\(P_0\\) 是债券的初始价格。\n\\(P_+\\) 是当收益率上升 \\(\\Delta y\\) 时债券的新价格。\n\\(P_-\\) 是当收益率下降 \\(\\Delta y\\) 时债券的新价格。\n\n通过这种方式，有效久期能够捕捉到因期权被触发而导致的现金流变化对价格敏感度的影响，从而更准确地衡量含权债券的利率风险，是分析复杂结构债券时不可或缺的工具。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>久期</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond-duration-intro.html#久期的主要应用场景",
+    "href": "body/bond-duration-intro.html#久期的主要应用场景",
+    "title": "2  久期",
+    "section": "2.3 久期的主要应用场景",
+    "text": "2.3 久期的主要应用场景\n久期作为固定收益投资分析的基石，其应用贯穿于风险管理和投资策略的制定等多个层面。它不仅仅是一个理论上的学术概念，更是指导实际投资决策的强大工具。理解并熟练运用久期，是每一位固定收益投资者的必修课。下面我们将结合具体实例，深入探讨久期的三大核心应用。\n\n2.3.1 利率风险的量化与管理\n在金融市场，无法被量化的事物往往难以被管理。久期的存在，使得原本抽象的“利率风险”有了一个具体的、可测量的标尺。投资者可以通过计算单只债券或整个投资组合的久期，来明确其在面临利率不利变动时的潜在损失敞口。久期数值越高，意味着资产价值对利率的跳动越剧烈，风险越大；反之亦然。\n\n\n\n\n\n\n实例 1：快速估算债券的潜在损失\n\n\n\n假设某债券基金持有一只公司债券，其当前市场价格为 98.5 元，修正久期经计算为 6.2。该基金的风险分析师需要评估在利率发生不利变动时，该债券可能带来的损失。\n场景：中央银行宣布为了抑制通胀，意外上调基准利率 25 个基点，市场普遍预期债券收益率将随之上涨 50 个基点（即 0.5%）。\n风险量化：分析师利用修正久期进行快速估算。根据公式 \\(\\frac{\\Delta P}{P} \\approx -D_{Mod} \\cdot \\Delta y\\)，可以估算出该债券价格的近似变动：\n\\[\n\\frac{\\Delta P}{P} \\approx -6.2 \\times 0.005 = -0.031\n\\]\n这意味着该债券的价格预计将下跌约 3.1%。其价格下跌的绝对值大约为：\n\\[\n\\Delta P \\approx 98.5 \\times (-0.031) \\approx -3.05 \\text{ 元}\n\\]\n新的价格将大约为 95.45 元。\n管理意义：这个快速计算的结果告诉基金经理，仅仅因为这次利率变动，这只债券就可能在每张上造成超过 3 元的账面损失。如果基金组合中此类债券的权重很高，整个组合的价值将面临显著缩水。因此，基金经理可以依据这一量化结果，决定是否需要减持该债券以降低风险敞口，或者使用利率期货等衍生品进行对冲。\n\n\n\n\n2.3.2 债券投资组合的免疫策略\n免疫是一种被动的资产组合管理策略，其目标是使投资组合的未来价值不受未来利率波动的影响，以确保能够满足一个特定的、在未来到期的负债需求。这种策略常用于养老基金、保险公司等机构投资者，它们需要精确匹配未来的现金流出（如养老金支付、赔款支付）。\n该策略的核心操作是使资产组合的久期 (\\(D_{\\text{Asset}}\\)) 与负债的久期 (\\(D_{\\text{Liability}}\\)) 保持相等。原理在于，当利率发生微小的平行移动时，资产端的价值变动与负债端的价值变动在幅度上大致相等，方向也相同（因为负债的现值同样对利率敏感）。这样一来，两者价值之差（即净资产）便得以“免疫”，不会因利率的小幅波动而受到实质性影响。\n\n\n\n\n\n\n实例 2：养老基金的免疫策略\n\n\n\n某养老基金承诺在 8 年后向一位退休员工一次性支付 100 万元的养老金。为了确保能履行这一未来负债，基金管理者希望构建一个“免疫”的资产组合。\n场景：\n\n负债：一笔 8 年后到期的 100 万元支付。我们可以将其视为一个零息债券，其久期恰好等于其到期期限，即 8 年。\n资产选择：市场上可供投资的债券有两种：\n\n债券 A：期限为 5 年，麦考利久期为 4.5 年。\n债券 B：期限为 15 年，麦考利久期为 12 年。\n\n策略实施：基金经理的目标是构建一个由债券 A 和债券 B 组成的投资组合，使其总久期等于 8 年。设投资于债券 A 的资金权重为 \\(w\\)，则投资于债券 B 的权重为 \\(1-w\\)。组合的久期 \\(D_{p}\\) 为：\n\n\\[\nD_{p} = w \\times 4.5 + (1-w) \\times 12\n\\]\n令 \\(D_{p} = 8\\)，解这个方程：\n\\[\n8 = 4.5w + 12 - 12w \\\\\n7.5w = 4 \\\\\nw = \\frac{4}{7.5} \\approx 0.533\n\\]\n因此，基金经理需要将大约 53.3% 的资金投资于 5 年期的债券 A，将剩余 46.7% 的资金投资于 15 年期的债券 B。\n原理说明：通过这样的配置，无论未来利率是微幅上升还是下降，债券组合的价值变动趋势将与未来 100 万元负债的现值变动趋势基本保持一致。利率上升带来的再投资收益增加，会恰好弥补资产市值的下跌；利率下降带来的再投资收益减少，也会被资产市值的上涨所补偿。从而，在 8 年后这个时点上，组合的价值将非常接近 100 万元，成功实现了对利率变动的“免疫”。\n\n\n\n\n2.3.3 主动型投资组合的构建与调整\n与免疫策略的防御性目标相反，主动型投资者旨在通过对未来利率走势的预测来获取超额收益。在这种投资哲学下，久期成为了一个至关重要的战术工具。投资者根据对未来利率方向的判断，主动地调整投资组合的久期，以放大收益或规避风险。\n具体操作逻辑如下：\n\n预期未来利率将下降：投资者应当增加投资组合的久期，以最大化债券价格上涨的收益。\n预期未来利率将上升：投资者应当缩短投资组合的久期，以最小化债券价格下跌的损失。\n\n\n\n\n\n\n\n实例 3：基于利率预期的久期战术调整\n\n\n\n某债券投资基金的基准是一个久期为 4.5 的综合债券指数。该基金的投资经理通过对宏观经济数据的分析，形成了对未来利率走势的明确判断。\n场景：投资经理预测，未来一年内，由于经济增长放缓，央行将采取宽松的货币政策，市场利率将进入一个下降通道。\n主动策略：为了从这一预判中获取超额收益（即跑赢基准指数），经理决定采取“增加久期”的进攻性策略。他认为，将整个投资组合的久期提升到 7.0，能够最大化利率下降带来的价格上涨收益。\n具体操作：\n\n减持：卖出一部分久期接近基准（如 4-5 年）的国债和政策性金融债。\n增持：用所得资金买入久期更长（如 10-20 年）的国债。由于长期债券对利率变化更为敏感，它们的久期远高于短期债券。\n\n预期结果：如果经理的预测成真，市场利率果然下降，那么其久期为 \\(7.0\\) 的投资组合，其价格上涨的幅度将显著超过久期为 \\(4.5\\) 的基准指数。例如，若利率普遍下降 \\(50\\) 个基点，其组合价值预计上涨约 \\(3.5\\%\\) (\\(7.0 \\times 0.005\\))，而基准指数仅上涨约 \\(2.25\\%\\) (\\(4.5 \\times 0.005\\))。这 \\(1.25\\%\\) 的超额收益就是该主动策略的成功之处。当然，如果利率不降反升，该组合的损失也会比基准更大，这正是主动投资所承担的风险。\n\n\n\n\n2.3.4 久期的其他应用\n除了前述三种典型情形（利率风险管理、免疫策略、主动型投资调整）之外，久期的思想在更广泛的金融市场中也有着广泛应用，如债券发行定价、资产负债管理、衍生品定价等。\n\n2.3.4.1 银行资产负债管理（ALM）\n在银行业，久期是衡量资产与负债利率敏感性匹配程度的核心指标。银行通过比较资产久期 (\\(D_A\\)) 与负债久期 (\\(D_L\\))，计算出“久期缺口”（Duration Gap）：\n\\[\nDG = D_A - \\frac{L}{A}D_L\n\\]\n当 \\(DG &gt; 0\\) 时，资产久期更长，意味着银行净值对利率上升更为敏感； 当 \\(DG &lt; 0\\) 时，则表明负债久期更长，利率下降时净值会缩水。\n\n\n\n\n\n\n例子\n\n\n\n若某银行的资产久期为 8 年，负债久期为 2 年，资产与负债规模均为 100 亿元，则久期缺口为 6 年。 如果利率上升 1 个百分点（0.01），银行净值约下降\n\\[\n\\Delta E/E_0 \\approx -DG × \\Delta r × \\frac{A}{E_0}\n\\]\n设初始净值 \\(E_0 = 10\\) 亿元，则净值下降约 \\(-6×0.01×(100/10)= -60%\\)。 这说明银行存在严重的利率风险暴露，需要通过延长负债久期或缩短资产久期来降低风险。\n\n\n久期匹配策略因此成为银行风险管理部门的常规操作，用于稳定资本充足率与净值波动。\n\n\n2.3.4.2 保险公司与养老金负债管理\n保险公司和养老金机构通常有长期、确定性较强的负债（如赔付、养老金支付），因此久期匹配是其投资组合设计的基本原则。 保险公司通过计算负债的久期（基于未来现金流贴现），再选择匹配久期的债券资产，从而降低利率波动对偿付能力的影响。\n例如：\n\n若负债久期为 12 年，保险公司会构建一个久期约等于 12 年的债券组合；\n若市场利率上升导致资产价值下降，负债现值也会相应下降，净值变化得到抵消；\n这就是所谓的“利率免疫 (interest rate immunization)” 在机构投资中的扩展应用。\n\n\n\n2.3.4.3 衍生品定价与对冲策略\n久期概念被广泛用于利率衍生品（如期货、互换、期权）的定价与风险控制。\n利率期货对冲：投资者可利用债券久期来计算需要持有多少份期货合约以对冲利率风险。\n对冲比率（hedge ratio）常按“久期等价”原理确定：\n\\[N = \\frac{D_p \\times P_p}{D_f \\times P_f}\\]\n其中，\\(N\\) 是期货合约张数，\\(D_p, P_p\\) 为现货组合久期和价格，\\(D_f, P_f\\) 为期货合约标的久期和价格。\n利率互换（Interest Rate Swap）：企业通过互换固定利率与浮动利率现金流，可以主动调整整体久期。例如，将长期固定利率债务换成浮动利率支付，可有效缩短负债久期。\n\n\n2.3.4.4 债券指数化投资与风险预算\n在债券指数化基金管理中，久期是风险暴露与绩效归因分析的核心指标。 基金经理可将组合风险拆解为：\n\n久期暴露（利率敏感度风险）；\n信用利差暴露；\n曲线形变风险等。\n\n在指数跟踪中，组合的目标久期必须与基准指数久期保持一致；若偏离过大，跟踪误差将显著增加。此外，久期还用于风险预算（risk budgeting），以控制单一利率风险因子对整体波动的贡献。\n\n\n2.3.4.5 宏观与政策分析中的久期思想\n久期不仅是金融定量分析工具，也被央行和研究机构用于分析债券市场结构与货币政策传导。\n市场平均久期变化：可反映投资者对未来利率预期的变化。\n\n当市场平均久期上升，往往表示投资者押注利率下降；\n当久期下降，则意味着投资者更倾向防御，预期利率上升。\n\n货币政策影响评估：央行加息通常导致债券久期价值下跌，从而影响长期资金配置与市场利率结构。通过监测久期变化，政策制定者可以评估其政策对市场的实际影响，从而调整策略以实现经济目标。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>久期</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond-duration-intro.html#小结",
+    "href": "body/bond-duration-intro.html#小结",
+    "title": "2  久期",
+    "section": "2.4 小结",
+    "text": "2.4 小结\n久期最初源于债券定价理论，但其应用早已超越单一证券分析。 从微观层面的投资组合管理，到宏观层面的货币政策评估，久期都扮演着连接“时间—风险—价格”三者关系的关键桥梁。理解久期的多维度应用，有助于投资者更系统地认识利率风险的本质及其在金融体系中的传导逻辑。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>久期</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_1.html",
+    "href": "body/bond_duration_python_part_1.html",
+    "title": "3  债券久期 Python 实操讲义（Part 1）",
+    "section": "",
+    "text": "3.1 模块 1. 理论验证：从公式到 Python\n本讲义对应理论部分第 4 章，包含三个模块： 1. 理论验证：从公式到 Python； 2. 投资组合久期与免疫策略； 3. 主动久期策略模拟。\n所有代码均可在 VS Code 的 Jupyter 环境中直接运行。\n本节通过 Python 函数计算债券价格、麦考利久期与修正久期，并验证价格–利率的线性近似关系。\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\n# 支持中文\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n\ndef price_bond(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    return np.sum(cashflows * discount_factors)\n\ndef macaulay_duration(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    pv_cashflows = cashflows * discount_factors\n    weights = pv_cashflows / np.sum(pv_cashflows)\n    time = np.arange(1, periods+1) / freq\n    return np.sum(weights * time)\n\ndef modified_duration(face, coupon_rate, ytm, maturity, freq=1):\n    D_mac = macaulay_duration(face, coupon_rate, ytm, maturity, freq)\n    return D_mac / (1 + ytm/freq)\n\nface, coupon_rate, maturity = 1000, 0.05, 5\nytms = np.linspace(0.02, 0.08, 30)\nprices = [price_bond(face, coupon_rate, y, maturity) for y in ytms]\nD_mac = macaulay_duration(face, coupon_rate, 0.05, maturity)\nD_mod = modified_duration(face, coupon_rate, 0.05, maturity)\nprint(f'麦考利久期 D_mac = {D_mac:.2f} 年')\nprint(f'修正久期 D_mod = {D_mod:.2f} 年')\nplt.figure(figsize=(8,5))\nplt.plot(ytms*100, prices, color='black')\nplt.title('债券价格与市场利率的关系')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('债券价格 (元)')\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n麦考利久期 D_mac = 4.55 年\n修正久期 D_mod = 4.33 年",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>债券久期 Python 实操讲义（Part 1）</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_1.html#模块-2.-投资组合久期与免疫策略",
+    "href": "body/bond_duration_python_part_1.html#模块-2.-投资组合久期与免疫策略",
+    "title": "3  债券久期 Python 实操讲义（Part 1）",
+    "section": "3.2 模块 2. 投资组合久期与免疫策略",
+    "text": "3.2 模块 2. 投资组合久期与免疫策略\n本节演示如何构建满足 \\(D_p = D_L\\) 的资产组合，从而实现久期免疫。\n\nD_A, D_B, D_L = 4.5, 12, 8\nw = (D_B - D_L) / (D_B - D_A)\nprint(f'为实现久期免疫: 投资于短期债券 A 的权重 w = {w:.3f}')\nprint(f'投资于长期债券 B 的权重 1-w = {1-w:.3f}')\ndef pv(value, duration, delta_y):\n    return value * (1 - duration * delta_y)\ny_changes = np.linspace(-0.01, 0.01, 21)\nE = []\nfor dy in y_changes:\n    A_val = pv(100, w*D_A+(1-w)*D_B, dy)\n    L_val = pv(100, D_L, dy)\n    E.append(A_val - L_val)\nplt.figure(figsize=(8,5))\nplt.plot(y_changes*100, E, color='blue', lw=2)\nplt.axhline(0, color='black', linestyle='--')\nplt.title('利率变动下的净值变化 (久期免疫示例)')\nplt.xlabel('利率变动 (bp)')\nplt.ylabel('净值变化 (亿元)')\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n为实现久期免疫: 投资于短期债券 A 的权重 w = 0.533\n投资于长期债券 B 的权重 1-w = 0.467",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>债券久期 Python 实操讲义（Part 1）</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_1.html#模块-3.-主动久期策略模拟",
+    "href": "body/bond_duration_python_part_1.html#模块-3.-主动久期策略模拟",
+    "title": "3  债券久期 Python 实操讲义（Part 1）",
+    "section": "3.3 模块 3. 主动久期策略模拟",
+    "text": "3.3 模块 3. 主动久期策略模拟\n通过调整投资组合久期 (D)，观察利率变化下的收益放大效应。\n\nD_bench, D_active = 4.5, 7.0\nrate_changes = np.linspace(-0.01, 0.01, 21)\nbench_returns = -D_bench * rate_changes\nactive_returns = -D_active * rate_changes\nplt.figure(figsize=(8,5))\nplt.plot(rate_changes*100, bench_returns*100, label='基准组合 (D=4.5)')\nplt.plot(rate_changes*100, active_returns*100, label='主动组合 (D=7.0)', linestyle='--')\nplt.axvline(0, color='black', lw=0.8)\nplt.title('主动久期策略收益模拟')\nplt.xlabel('利率变动 (%)')\nplt.ylabel('价格变化 (%)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nΔy = -0.005\nexcess = (D_active - D_bench)*(-Δy)*100\nprint(f'若利率下降 50bp，主动组合的超额收益约为 {excess:.2f}%')\n\n\n\n\n\n\n\n\n若利率下降 50bp，主动组合的超额收益约为 1.25%",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>债券久期 Python 实操讲义（Part 1）</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_2.html",
+    "href": "body/bond_duration_python_part_2.html",
+    "title": "4  债券久期：Python 实操 II",
+    "section": "",
+    "text": "4.1 模块 4. 利率风险管理与久期缺口分析（银行 ALM 案例）\n本讲涵盖以下模块：\n所有代码均可直接在 VS Code 的 Jupyter Notebook 中运行。\n本节演示银行如何利用久期缺口 (DG) 衡量净值对利率变化的敏感度，并通过可视化展示不同 DG 水平下净值的变动。\nimport numpy as np\nimport matplotlib.pyplot as plt\n# 支持中文\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n\nA, L = 100, 90\nE0 = A - L\nDG_list = [0, 3, 6]\nr = np.linspace(0.03, 0.08, 101)\nresults = {}\nfor DG in DG_list:\n    dE = -DG * (r - 0.05) * (A/E0)\n    E = E0 * (1 + dE)\n    results[DG] = E\nplt.figure(figsize=(6,4))\nfor DG, E in results.items():\n    plt.plot(r*100, E, lw=2, label=f'DG = {DG}')\nplt.title('久期缺口与银行净值对利率变化的敏感度')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('银行净值 E (亿元)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nprint('当利率上升 1% 时:')\nfor DG in DG_list:\n    dE = -DG * 0.01 * (A/E0)\n    print(f'  DG={DG} → 净值变化约 {dE*100:.1f}%')\n\n\n\n\n\n\n\n\n当利率上升 1% 时:\n  DG=0 → 净值变化约 0.0%\n  DG=3 → 净值变化约 -30.0%\n  DG=6 → 净值变化约 -60.0%",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>债券久期：Python 实操 II</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_2.html#模块-5.-含权债券的有效久期计算",
+    "href": "body/bond_duration_python_part_2.html#模块-5.-含权债券的有效久期计算",
+    "title": "4  债券久期：Python 实操 II",
+    "section": "4.2 模块 5. 含权债券的有效久期计算",
+    "text": "4.2 模块 5. 含权债券的有效久期计算\n有效久期 \\(D_{Eff}\\) 衡量含权债券价格对利率变化的平均敏感度。由于发行人可能在利率下降时提前赎回，含权债券的价格变化往往不对称。\n\nP0, Δy = 100, 0.01\nP_minus, P_plus = 105, 95\nD_eff = (P_minus - P_plus) / (2 * P0 * Δy)\nprint(f'有效久期 D_eff = {D_eff:.2f} 年')\nprint('含权债券的有效久期低于普通债券, 因为价格对利率变化的反应不对称。')\ny = np.linspace(0.02, 0.08, 20)\nP_no_option = 100 * (1 - 5 * (y - 0.05))\nP_callable = 100 * (1 - 3.5 * (y - 0.05))\nP_callable[P_callable&gt;105] = 105\nplt.figure(figsize=(8,5))\nplt.plot(y*100, P_no_option, label='无赎回债券', color='black')\nplt.plot(y*100, P_callable, label='可赎回债券', color='red', linestyle='--')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('债券价格 (元)')\nplt.title('含权债券的有效久期与价格反应不对称性')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n有效久期 D_eff = 5.00 年\n含权债券的有效久期低于普通债券, 因为价格对利率变化的反应不对称。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>债券久期：Python 实操 II</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_2.html#模块-6.-使用-akshare-获取中国国债收益率并计算久期",
+    "href": "body/bond_duration_python_part_2.html#模块-6.-使用-akshare-获取中国国债收益率并计算久期",
+    "title": "4  债券久期：Python 实操 II",
+    "section": "4.3 模块 6. 使用 AkShare 获取中国国债收益率并计算久期",
+    "text": "4.3 模块 6. 使用 AkShare 获取中国国债收益率并计算久期\n本节演示如何使用 AkShare 获取中国国债收益率数据，并计算不同期限债券的久期示意。\n\nimport akshare as ak\ntry:\n    yield_curve = ak.bond_zh_us_rate()\n    print('数据示例:')\n    print(yield_curve.head())\nexcept Exception as e:\n    print('未能成功访问 AkShare 接口, 请检查网络或数据源:', e)\nmaturity = np.array([2, 5, 10])\nyield_rate = np.array([0.025, 0.03, 0.035])\nD_zcb = maturity\nD_coupon = maturity - 0.5 * (maturity/10)\nplt.figure(figsize=(8,5))\nplt.plot(maturity, D_zcb, 'o-', label='零息债券久期')\nplt.plot(maturity, D_coupon, 's--', label='息票债券久期')\nplt.title('中国市场不同期限国债的久期比较 (示意)')\nplt.xlabel('到期期限 (年)')\nplt.ylabel('久期 (年)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nprint('结果说明: 零息债券久期等于到期时间, 而息票债券久期较短, 因为提前收到现金流。')\n\n\n\n\n数据示例:\n           日期  中国国债收益率2年  中国国债收益率5年  中国国债收益率10年  中国国债收益率30年  中国国债收益率10年-2年  \\\n0  1990-12-19        NaN        NaN         NaN         NaN            NaN   \n1  1990-12-20        NaN        NaN         NaN         NaN            NaN   \n2  1990-12-21        NaN        NaN         NaN         NaN            NaN   \n3  1990-12-24        NaN        NaN         NaN         NaN            NaN   \n4  1990-12-26        NaN        NaN         NaN         NaN            NaN   \n\n   中国GDP年增率  美国国债收益率2年  美国国债收益率5年  美国国债收益率10年  美国国债收益率30年  美国国债收益率10年-2年  \\\n0       NaN       7.21       7.64        8.00        8.19           0.79   \n1       NaN       7.25       7.67        8.05        8.22           0.80   \n2       NaN       7.30       7.75        8.11        8.28           0.81   \n3       NaN       7.35       7.84        8.20        8.36           0.85   \n4       NaN       7.27       7.78        8.15        8.30           0.88   \n\n   美国GDP年增率  \n0       NaN  \n1       NaN  \n2       NaN  \n3       NaN  \n4       NaN  \n\n\n\n\n\n\n\n\n\n结果说明: 零息债券久期等于到期时间, 而息票债券久期较短, 因为提前收到现金流。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>债券久期：Python 实操 II</span>"
+    ]
+  }
+]
