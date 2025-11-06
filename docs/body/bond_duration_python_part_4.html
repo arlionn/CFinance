@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; 久期：Python 实操 1 – Corporate Finance</title>
+<title>6&nbsp; 久期：Python 实操 4 – Corporate Finance</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,15 +57,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../body/bond_duration_python_part_2.html" rel="next">
-<link href="../body/bond-duration-intro.html" rel="prev">
+<link href="../body/bond_duration_python_part_3.html" rel="prev">
 <link href="../images/book-logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -103,6 +102,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -146,7 +148,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_1.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">久期：Python 实操 1</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_4.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">久期：Python 实操 4</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -205,7 +207,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../body/bond_duration_python_part_1.html" class="sidebar-item-text sidebar-link active">
+  <a href="../body/bond_duration_python_part_1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">久期：Python 实操 1</span></span></a>
   </div>
 </li>
@@ -223,7 +225,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../body/bond_duration_python_part_4.html" class="sidebar-item-text sidebar-link">
+  <a href="../body/bond_duration_python_part_4.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">久期：Python 实操 4</span></span></a>
   </div>
 </li>
@@ -239,18 +241,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#理论验证从公式到-python" id="toc-理论验证从公式到-python" class="nav-link active" data-scroll-target="#理论验证从公式到-python"><span class="header-section-number">3.1</span> 理论验证：从公式到 Python</a></li>
-  <li><a href="#投资组合久期与免疫策略" id="toc-投资组合久期与免疫策略" class="nav-link" data-scroll-target="#投资组合久期与免疫策略"><span class="header-section-number">3.2</span> 投资组合久期与免疫策略</a></li>
-  <li><a href="#主动久期策略模拟" id="toc-主动久期策略模拟" class="nav-link" data-scroll-target="#主动久期策略模拟"><span class="header-section-number">3.3</span> 主动久期策略模拟</a></li>
+  <li><a href="#模块-10.-实际数据验证中国债券市场久期估算" id="toc-模块-10.-实际数据验证中国债券市场久期估算" class="nav-link active" data-scroll-target="#模块-10.-实际数据验证中国债券市场久期估算"><span class="header-section-number">6.1</span> 模块 10. 实际数据验证：中国债券市场久期估算</a></li>
+  <li><a href="#模块-11.-风险分解与敏感度分析" id="toc-模块-11.-风险分解与敏感度分析" class="nav-link" data-scroll-target="#模块-11.-风险分解与敏感度分析"><span class="header-section-number">6.2</span> 模块 11. 风险分解与敏感度分析</a></li>
+  <li><a href="#模块-12.-课堂练习与扩展案例" id="toc-模块-12.-课堂练习与扩展案例" class="nav-link" data-scroll-target="#模块-12.-课堂练习与扩展案例"><span class="header-section-number">6.3</span> 模块 12. 课堂练习与扩展案例</a>
+  <ul class="collapse">
+  <li><a href="#练习-1久期匹配" id="toc-练习-1久期匹配" class="nav-link" data-scroll-target="#练习-1久期匹配"><span class="header-section-number">6.3.1</span> 练习 1：久期匹配</a></li>
+  <li><a href="#练习-2凸性调整" id="toc-练习-2凸性调整" class="nav-link" data-scroll-target="#练习-2凸性调整"><span class="header-section-number">6.3.2</span> 练习 2：凸性调整</a></li>
+  <li><a href="#练习-3akshare-拓展" id="toc-练习-3akshare-拓展" class="nav-link" data-scroll-target="#练习-3akshare-拓展"><span class="header-section-number">6.3.3</span> 练习 3：AkShare 拓展</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_1.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">久期：Python 实操 1</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_4.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">久期：Python 实操 4</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">久期：Python 实操 1</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">久期：Python 实操 4</span></h1>
 </div>
 
 
@@ -267,148 +274,258 @@ window.Quarto = {
 </header>
 
 
-<p>本讲包含三个模块：</p>
+<p>本讲主要包括：</p>
 <ol type="1">
-<li>理论验证：从公式到 Python；</li>
-<li>投资组合久期与免疫策略；</li>
-<li>主动久期策略模拟。</li>
+<li>模块 10：实际数据验证（中国债券市场久期估算）；</li>
+<li>模块 11：风险分解与敏感度分析；</li>
+<li>模块 12：课堂练习与扩展案例。</li>
 </ol>
-<p>所有代码均可在 VS Code 的 Jupyter 环境中直接运行。</p>
-<blockquote class="blockquote">
-<p><a href="https://chatgpt.com/share/690bfd9a-cffc-8005-a49d-92b9208cb91a">ChatGPT 对话过程</a></p>
-</blockquote>
-<section id="理论验证从公式到-python" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="理论验证从公式到-python"><span class="header-section-number">3.1</span> 理论验证：从公式到 Python</h2>
-<p>本节通过 Python 函数计算债券价格、麦考利久期与修正久期，并验证价格–利率的线性近似关系。</p>
+<p>本部分将真实市场数据与理论模型结合，用于课堂演示与学生练习。</p>
+<section id="模块-10.-实际数据验证中国债券市场久期估算" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="模块-10.-实际数据验证中国债券市场久期估算"><span class="header-section-number">6.1</span> 模块 10. 实际数据验证：中国债券市场久期估算</h2>
+<p>通过 AkShare 获取中国国债收益率曲线，并估算不同期限国债的久期与价格敏感性。</p>
 <div id="cell-2" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> akshare <span class="im">as</span> ak</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 支持中文</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 中文支持</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'SimHei'</span>]</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.unicode_minus'</span>] <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> price_bond(face, coupon_rate, ytm, maturity, freq<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    periods <span class="op">=</span> <span class="bu">int</span>(maturity <span class="op">*</span> freq)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    coupon <span class="op">=</span> face <span class="op">*</span> coupon_rate <span class="op">/</span> freq</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    cashflows <span class="op">=</span> np.repeat(coupon, periods)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    cashflows[<span class="op">-</span><span class="dv">1</span>] <span class="op">+=</span> face</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    discount_factors <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> ytm<span class="op">/</span>freq) <span class="op">**</span> np.arange(<span class="dv">1</span>, periods<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(cashflows <span class="op">*</span> discount_factors)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> macaulay_duration(face, coupon_rate, ytm, maturity, freq<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    periods <span class="op">=</span> <span class="bu">int</span>(maturity <span class="op">*</span> freq)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    coupon <span class="op">=</span> face <span class="op">*</span> coupon_rate <span class="op">/</span> freq</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    cashflows <span class="op">=</span> np.repeat(coupon, periods)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    cashflows[<span class="op">-</span><span class="dv">1</span>] <span class="op">+=</span> face</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    discount_factors <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> ytm<span class="op">/</span>freq) <span class="op">**</span> np.arange(<span class="dv">1</span>, periods<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    pv_cashflows <span class="op">=</span> cashflows <span class="op">*</span> discount_factors</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> pv_cashflows <span class="op">/</span> np.<span class="bu">sum</span>(pv_cashflows)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> np.arange(<span class="dv">1</span>, periods<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> freq</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(weights <span class="op">*</span> time)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modified_duration(face, coupon_rate, ytm, maturity, freq<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    D_mac <span class="op">=</span> macaulay_duration(face, coupon_rate, ytm, maturity, freq)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> D_mac <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> ytm<span class="op">/</span>freq)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>face, coupon_rate, maturity <span class="op">=</span> <span class="dv">1000</span>, <span class="fl">0.05</span>, <span class="dv">5</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ytms <span class="op">=</span> np.linspace(<span class="fl">0.02</span>, <span class="fl">0.08</span>, <span class="dv">30</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> [price_bond(face, coupon_rate, y, maturity) <span class="cf">for</span> y <span class="kw">in</span> ytms]</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>D_mac <span class="op">=</span> macaulay_duration(face, coupon_rate, <span class="fl">0.05</span>, maturity)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>D_mod <span class="op">=</span> modified_duration(face, coupon_rate, <span class="fl">0.05</span>, maturity)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'麦考利久期 D_mac = </span><span class="sc">{</span>D_mac<span class="sc">:.2f}</span><span class="ss"> 年'</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'修正久期 D_mod = </span><span class="sc">{</span>D_mod<span class="sc">:.2f}</span><span class="ss"> 年'</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">5</span>))</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>plt.plot(ytms<span class="op">*</span><span class="dv">100</span>, prices, color<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'债券价格与市场利率的关系'</span>)</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'市场利率 (%)'</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'债券价格 (元)'</span>)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取中国国债收益率曲线数据</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    yield_curve <span class="op">=</span> ak.bond_china_yield()  <span class="co"># 国债收益率曲线数据</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'中国国债收益率曲线数据示例：'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    display(yield_curve.head())</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'未能成功访问 AkShare 接口，请检查网络或数据源:'</span>, e)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 构造示例数据</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>maturity <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>])</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>yield_rate <span class="op">=</span> np.array([<span class="fl">0.025</span>, <span class="fl">0.027</span>, <span class="fl">0.030</span>, <span class="fl">0.033</span>, <span class="fl">0.035</span>])</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>duration <span class="op">=</span> maturity <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> <span class="fl">0.1</span> <span class="op">*</span> np.log1p(maturity))</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">5</span>))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>plt.plot(maturity, yield_rate<span class="op">*</span><span class="dv">100</span>, <span class="st">'o-'</span>, label<span class="op">=</span><span class="st">'收益率曲线'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.twinx()</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.plot(maturity, duration, <span class="st">'s--'</span>, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'估算久期'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'中国国债收益率与久期示意图'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'期限 (年)'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'收益率 / 久期'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>麦考利久期 D_mac = 4.55 年
-修正久期 D_mod = 4.33 年</code></pre>
+<pre><code>中国国债收益率曲线数据示例：</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">曲线名称</th>
+<th data-quarto-table-cell-role="th">日期</th>
+<th data-quarto-table-cell-role="th">3月</th>
+<th data-quarto-table-cell-role="th">6月</th>
+<th data-quarto-table-cell-role="th">1年</th>
+<th data-quarto-table-cell-role="th">3年</th>
+<th data-quarto-table-cell-role="th">5年</th>
+<th data-quarto-table-cell-role="th">7年</th>
+<th data-quarto-table-cell-role="th">10年</th>
+<th data-quarto-table-cell-role="th">30年</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>中债中短期票据收益率曲线(AAA)</td>
+<td>2020-02-04</td>
+<td>2.8939</td>
+<td>2.8998</td>
+<td>2.9158</td>
+<td>3.1970</td>
+<td>3.4503</td>
+<td>3.7153</td>
+<td>3.9597</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>中债商业银行普通债收益率曲线(AAA)</td>
+<td>2020-02-04</td>
+<td>2.7215</td>
+<td>2.7370</td>
+<td>2.8042</td>
+<td>2.9979</td>
+<td>3.3120</td>
+<td>3.5849</td>
+<td>3.8158</td>
+<td>4.2435</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>中债国债收益率曲线</td>
+<td>2020-02-04</td>
+<td>1.7475</td>
+<td>1.7630</td>
+<td>2.1000</td>
+<td>2.4056</td>
+<td>2.6399</td>
+<td>2.7906</td>
+<td>2.8551</td>
+<td>3.4488</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>中债国债收益率曲线</td>
+<td>2020-02-05</td>
+<td>1.7475</td>
+<td>1.7667</td>
+<td>2.0773</td>
+<td>2.4264</td>
+<td>2.6348</td>
+<td>2.7893</td>
+<td>2.8440</td>
+<td>3.4460</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>中债中短期票据收益率曲线(AAA)</td>
+<td>2020-02-05</td>
+<td>2.7991</td>
+<td>2.8975</td>
+<td>2.9118</td>
+<td>3.1949</td>
+<td>3.4609</td>
+<td>3.7157</td>
+<td>3.9601</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bond_duration_python_part_1_files/figure-html/cell-2-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="bond_duration_python_part_4_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>说明：</strong></p>
+<ul>
+<li><p><code>ak.bond_china_yield()</code> 是获取中国债券收益率曲线的接口。若你需要指定起始／结束日期，可查阅当前版本文档查看是否支持 <code>start_date</code>、<code>end_date</code> 参数。</p></li>
+<li><p>代码中假设列名为 <code>"期限(年)"</code> 和 <code>"收益率(%)"</code>，实际可能不同，请运行 <code>print(df.columns)</code> 检查并修改。</p></li>
+<li><p>此处将”估算久期”简化为 <code>到期期限 × 0.9</code>，仅用于教学演示。若你有准确久期模型，可替换该假设。</p></li>
+<li><p>绘图中采用双 Y 轴：左轴为收益率（蓝色）、右轴为估算久期（红色），帮助学生直观理解”到期期限 → 久期”及其与收益率关系。</p></li>
+</ul>
+</section>
+<section id="模块-11.-风险分解与敏感度分析" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="模块-11.-风险分解与敏感度分析"><span class="header-section-number">6.2</span> 模块 11. 风险分解与敏感度分析</h2>
+<p>在组合管理中，久期只是利率风险的第一层。我们可以进一步分解风险来源： - <strong>平行移动风险</strong>：整体收益率曲线平移； - <strong>陡峭化风险</strong>：短端与长端利率变化不同步； - <strong>曲率变化风险</strong>：中部利率变化导致曲率变化。</p>
+<div id="cell-5" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>maturity <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> np.array([<span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>duration <span class="op">=</span> np.array([<span class="fl">0.9</span>, <span class="fl">2.8</span>, <span class="fl">4.5</span>, <span class="fl">8.5</span>])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>exposure <span class="op">=</span> weights <span class="op">*</span> duration</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'期限'</span>: maturity, <span class="st">'权重'</span>: weights, <span class="st">'久期'</span>: duration, <span class="st">'久期贡献'</span>: exposure})</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>display(df)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'组合总久期 = </span><span class="sc">{</span>exposure<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.2f}</span><span class="ss"> 年'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 模拟平行移动 vs 陡峭化</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>Δy_parallel <span class="op">=</span> np.repeat(<span class="fl">0.005</span>, <span class="dv">4</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>Δy_steep <span class="op">=</span> np.array([<span class="fl">0.002</span>, <span class="fl">0.003</span>, <span class="fl">0.006</span>, <span class="fl">0.008</span>])</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>ΔP_parallel <span class="op">=</span> <span class="op">-</span>duration <span class="op">*</span> Δy_parallel</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ΔP_steep <span class="op">=</span> <span class="op">-</span>duration <span class="op">*</span> Δy_steep</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">5</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.plot(maturity, ΔP_parallel<span class="op">*</span><span class="dv">100</span>, <span class="st">'o-'</span>, label<span class="op">=</span><span class="st">'平行移动'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.plot(maturity, ΔP_steep<span class="op">*</span><span class="dv">100</span>, <span class="st">'s--'</span>, label<span class="op">=</span><span class="st">'陡峭化变化'</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'收益率曲线形态变化对不同期限债券的影响'</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'期限 (年)'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'价格变化 (%)'</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">期限</th>
+<th data-quarto-table-cell-role="th">权重</th>
+<th data-quarto-table-cell-role="th">久期</th>
+<th data-quarto-table-cell-role="th">久期贡献</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>0.3</td>
+<td>0.9</td>
+<td>0.27</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>3</td>
+<td>0.3</td>
+<td>2.8</td>
+<td>0.84</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>5</td>
+<td>0.2</td>
+<td>4.5</td>
+<td>0.90</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>0.2</td>
+<td>8.5</td>
+<td>1.70</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>组合总久期 = 3.71 年</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bond_duration_python_part_4_files/figure-html/cell-3-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="投资组合久期与免疫策略" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="投资组合久期与免疫策略"><span class="header-section-number">3.2</span> 投资组合久期与免疫策略</h2>
-<p>本节演示如何构建满足 <span class="math inline">\(D_p = D_L\)</span> 的资产组合，从而实现久期免疫。</p>
-<div id="cell-4" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>D_A, D_B, D_L <span class="op">=</span> <span class="fl">4.5</span>, <span class="dv">12</span>, <span class="dv">8</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (D_B <span class="op">-</span> D_L) <span class="op">/</span> (D_B <span class="op">-</span> D_A)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'为实现久期免疫: 投资于短期债券 A 的权重 w = </span><span class="sc">{</span>w<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'投资于长期债券 B 的权重 1-w = </span><span class="sc">{</span><span class="dv">1</span><span class="op">-</span>w<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pv(value, duration, delta_y):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> duration <span class="op">*</span> delta_y)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y_changes <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span>, <span class="dv">21</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> []</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dy <span class="kw">in</span> y_changes:</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    A_val <span class="op">=</span> pv(<span class="dv">100</span>, w<span class="op">*</span>D_A<span class="op">+</span>(<span class="dv">1</span><span class="op">-</span>w)<span class="op">*</span>D_B, dy)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    L_val <span class="op">=</span> pv(<span class="dv">100</span>, D_L, dy)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    E.append(A_val <span class="op">-</span> L_val)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">5</span>))</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.plot(y_changes<span class="op">*</span><span class="dv">100</span>, E, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'利率变动下的净值变化 (久期免疫示例)'</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'利率变动 (bp)'</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'净值变化 (亿元)'</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>为实现久期免疫: 投资于短期债券 A 的权重 w = 0.533
-投资于长期债券 B 的权重 1-w = 0.467</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="bond_duration_python_part_1_files/figure-html/cell-3-output-2.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="模块-12.-课堂练习与扩展案例" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="模块-12.-课堂练习与扩展案例"><span class="header-section-number">6.3</span> 模块 12. 课堂练习与扩展案例</h2>
+<section id="练习-1久期匹配" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="练习-1久期匹配"><span class="header-section-number">6.3.1</span> 练习 1：久期匹配</h3>
+<p>给定： - 资产久期 5 年； - 负债久期 8 年； - 可投资短期债券久期 2 年、长期债券久期 10 年。 请计算各自投资权重以实现久期免疫。</p>
 </section>
-<section id="主动久期策略模拟" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="主动久期策略模拟"><span class="header-section-number">3.3</span> 主动久期策略模拟</h2>
-<p>通过调整投资组合久期 (D)，观察利率变化下的收益放大效应。</p>
-<div id="cell-6" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>D_bench, D_active <span class="op">=</span> <span class="fl">4.5</span>, <span class="fl">7.0</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rate_changes <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span>, <span class="dv">21</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>bench_returns <span class="op">=</span> <span class="op">-</span>D_bench <span class="op">*</span> rate_changes</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>active_returns <span class="op">=</span> <span class="op">-</span>D_active <span class="op">*</span> rate_changes</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">5</span>))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.plot(rate_changes<span class="op">*</span><span class="dv">100</span>, bench_returns<span class="op">*</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'基准组合 (D=4.5)'</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.plot(rate_changes<span class="op">*</span><span class="dv">100</span>, active_returns<span class="op">*</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'主动组合 (D=7.0)'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, lw<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'主动久期策略收益模拟'</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'利率变动 (%)'</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'价格变化 (%)'</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>Δy <span class="op">=</span> <span class="op">-</span><span class="fl">0.005</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>excess <span class="op">=</span> (D_active <span class="op">-</span> D_bench)<span class="op">*</span>(<span class="op">-</span>Δy)<span class="op">*</span><span class="dv">100</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'若利率下降 50bp，主动组合的超额收益约为 </span><span class="sc">{</span>excess<span class="sc">:.2f}</span><span class="ss">%'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="bond_duration_python_part_1_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>若利率下降 50bp，主动组合的超额收益约为 1.25%</code></pre>
-</div>
-</div>
+<section id="练习-2凸性调整" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="练习-2凸性调整"><span class="header-section-number">6.3.2</span> 练习 2：凸性调整</h3>
+<p>编写函数，计算债券价格变动的二阶近似： <span class="math display">\[ ΔP/P = -D_{mod} Δy + 0.5C(Δy)^2 \]</span> 并验证在不同 Δy 下，久期与凸性联合估计的误差大小。</p>
+</section>
+<section id="练习-3akshare-拓展" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="练习-3akshare-拓展"><span class="header-section-number">6.3.3</span> 练习 3：AkShare 拓展</h3>
+<p>使用 AkShare 调用 <code>bond_zh_us_rate()</code> 数据，比较中国与美国国债收益率曲线差异。</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -836,14 +953,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../body/bond-duration-intro.html" class="pagination-link" aria-label="久期">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">久期</span></span>
+      <a href="../body/bond_duration_python_part_3.html" class="pagination-link" aria-label="久期：Python 实操 3">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">久期：Python 实操 3</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../body/bond_duration_python_part_2.html" class="pagination-link" aria-label="久期：Python 实操 2">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">久期：Python 实操 2</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

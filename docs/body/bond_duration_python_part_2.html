@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; 债券久期：Python 实操 II – Corporate Finance</title>
+<title>4&nbsp; 久期：Python 实操 2 – Corporate Finance</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../body/bond_duration_python_part_3.html" rel="next">
 <link href="../body/bond_duration_python_part_1.html" rel="prev">
 <link href="../images/book-logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -149,7 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_2.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">债券久期：Python 实操 II</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_2.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">久期：Python 实操 2</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -209,13 +210,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../body/bond_duration_python_part_1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">债券久期 Python 实操讲义（Part 1）</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">久期：Python 实操 1</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../body/bond_duration_python_part_2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">债券久期：Python 实操 II</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">久期：Python 实操 2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/bond_duration_python_part_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">久期：Python 实操 3</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/bond_duration_python_part_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">久期：Python 实操 4</span></span></a>
   </div>
 </li>
       </ul>
@@ -230,18 +243,18 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#模块-4.-利率风险管理与久期缺口分析银行-alm-案例" id="toc-模块-4.-利率风险管理与久期缺口分析银行-alm-案例" class="nav-link active" data-scroll-target="#模块-4.-利率风险管理与久期缺口分析银行-alm-案例"><span class="header-section-number">4.1</span> 模块 4. 利率风险管理与久期缺口分析（银行 ALM 案例）</a></li>
-  <li><a href="#模块-5.-含权债券的有效久期计算" id="toc-模块-5.-含权债券的有效久期计算" class="nav-link" data-scroll-target="#模块-5.-含权债券的有效久期计算"><span class="header-section-number">4.2</span> 模块 5. 含权债券的有效久期计算</a></li>
-  <li><a href="#模块-6.-使用-akshare-获取中国国债收益率并计算久期" id="toc-模块-6.-使用-akshare-获取中国国债收益率并计算久期" class="nav-link" data-scroll-target="#模块-6.-使用-akshare-获取中国国债收益率并计算久期"><span class="header-section-number">4.3</span> 模块 6. 使用 AkShare 获取中国国债收益率并计算久期</a></li>
+  <li><a href="#利率风险管理与久期缺口分析" id="toc-利率风险管理与久期缺口分析" class="nav-link active" data-scroll-target="#利率风险管理与久期缺口分析"><span class="header-section-number">4.1</span> 利率风险管理与久期缺口分析</a></li>
+  <li><a href="#含权债券的有效久期计算" id="toc-含权债券的有效久期计算" class="nav-link" data-scroll-target="#含权债券的有效久期计算"><span class="header-section-number">4.2</span> 含权债券的有效久期计算</a></li>
+  <li><a href="#使用-akshare-获取中国国债收益率并计算久期" id="toc-使用-akshare-获取中国国债收益率并计算久期" class="nav-link" data-scroll-target="#使用-akshare-获取中国国债收益率并计算久期"><span class="header-section-number">4.3</span> 使用 AkShare 获取中国国债收益率并计算久期</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_2.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">债券久期：Python 实操 II</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/bond-duration-intro.html"><strong>债券估值</strong></a></li><li class="breadcrumb-item"><a href="../body/bond_duration_python_part_2.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">久期：Python 实操 2</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">债券久期：Python 实操 II</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">久期：Python 实操 2</span></h1>
 </div>
 
 
@@ -265,8 +278,8 @@ window.Quarto = {
 <li>使用 AkShare 获取中国国债收益率并计算久期。</li>
 </ol>
 <p>所有代码均可直接在 VS Code 的 Jupyter Notebook 中运行。</p>
-<section id="模块-4.-利率风险管理与久期缺口分析银行-alm-案例" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="模块-4.-利率风险管理与久期缺口分析银行-alm-案例"><span class="header-section-number">4.1</span> 模块 4. 利率风险管理与久期缺口分析（银行 ALM 案例）</h2>
+<section id="利率风险管理与久期缺口分析" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="利率风险管理与久期缺口分析"><span class="header-section-number">4.1</span> 利率风险管理与久期缺口分析</h2>
 <p>本节演示银行如何利用久期缺口 (DG) 衡量净值对利率变化的敏感度，并通过可视化展示不同 DG 水平下净值的变动。</p>
 <div id="cell-2" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -312,8 +325,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="模块-5.-含权债券的有效久期计算" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="模块-5.-含权债券的有效久期计算"><span class="header-section-number">4.2</span> 模块 5. 含权债券的有效久期计算</h2>
+<section id="含权债券的有效久期计算" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="含权债券的有效久期计算"><span class="header-section-number">4.2</span> 含权债券的有效久期计算</h2>
 <p>有效久期 <span class="math inline">\(D_{Eff}\)</span> 衡量含权债券价格对利率变化的平均敏感度。由于发行人可能在利率下降时提前赎回，含权债券的价格变化往往不对称。</p>
 <div id="cell-4" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>P0, Δy <span class="op">=</span> <span class="dv">100</span>, <span class="fl">0.01</span></span>
@@ -347,8 +360,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="模块-6.-使用-akshare-获取中国国债收益率并计算久期" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="模块-6.-使用-akshare-获取中国国债收益率并计算久期"><span class="header-section-number">4.3</span> 模块 6. 使用 AkShare 获取中国国债收益率并计算久期</h2>
+<section id="使用-akshare-获取中国国债收益率并计算久期" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="使用-akshare-获取中国国债收益率并计算久期"><span class="header-section-number">4.3</span> 使用 AkShare 获取中国国债收益率并计算久期</h2>
 <p>本节演示如何使用 AkShare 获取中国国债收益率数据，并计算不同期限债券的久期示意。</p>
 <div id="cell-6" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> akshare <span class="im">as</span> ak</span>
@@ -840,11 +853,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../body/bond_duration_python_part_1.html" class="pagination-link" aria-label="债券久期 Python 实操讲义（Part 1）">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">债券久期 Python 实操讲义（Part 1）</span></span>
+      <a href="../body/bond_duration_python_part_1.html" class="pagination-link" aria-label="久期：Python 实操 1">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">久期：Python 实操 1</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../body/bond_duration_python_part_3.html" class="pagination-link" aria-label="久期：Python 实操 3">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">久期：Python 实操 3</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

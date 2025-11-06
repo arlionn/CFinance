@@ -34,7 +34,8 @@ book:
         - body/bond-duration-intro.md
         - body/bond_duration_python_part_1.ipynb
         - body/bond_duration_python_part_2.ipynb
-
+        - body/bond_duration_python_part_3.ipynb
+        - body/bond_duration_python_part_4.ipynb
 
 
 format:

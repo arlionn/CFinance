@@ -87,67 +87,144 @@
   {
     "objectID": "body/bond_duration_python_part_1.html",
     "href": "body/bond_duration_python_part_1.html",
-    "title": "3  债券久期 Python 实操讲义（Part 1）",
+    "title": "3  久期：Python 实操 1",
     "section": "",
-    "text": "3.1 模块 1. 理论验证：从公式到 Python\n本讲义对应理论部分第 4 章，包含三个模块： 1. 理论验证：从公式到 Python； 2. 投资组合久期与免疫策略； 3. 主动久期策略模拟。\n所有代码均可在 VS Code 的 Jupyter 环境中直接运行。\n本节通过 Python 函数计算债券价格、麦考利久期与修正久期，并验证价格–利率的线性近似关系。\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\n# 支持中文\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n\ndef price_bond(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    return np.sum(cashflows * discount_factors)\n\ndef macaulay_duration(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    pv_cashflows = cashflows * discount_factors\n    weights = pv_cashflows / np.sum(pv_cashflows)\n    time = np.arange(1, periods+1) / freq\n    return np.sum(weights * time)\n\ndef modified_duration(face, coupon_rate, ytm, maturity, freq=1):\n    D_mac = macaulay_duration(face, coupon_rate, ytm, maturity, freq)\n    return D_mac / (1 + ytm/freq)\n\nface, coupon_rate, maturity = 1000, 0.05, 5\nytms = np.linspace(0.02, 0.08, 30)\nprices = [price_bond(face, coupon_rate, y, maturity) for y in ytms]\nD_mac = macaulay_duration(face, coupon_rate, 0.05, maturity)\nD_mod = modified_duration(face, coupon_rate, 0.05, maturity)\nprint(f'麦考利久期 D_mac = {D_mac:.2f} 年')\nprint(f'修正久期 D_mod = {D_mod:.2f} 年')\nplt.figure(figsize=(8,5))\nplt.plot(ytms*100, prices, color='black')\nplt.title('债券价格与市场利率的关系')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('债券价格 (元)')\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n麦考利久期 D_mac = 4.55 年\n修正久期 D_mod = 4.33 年",
+    "text": "3.1 理论验证：从公式到 Python\n本讲包含三个模块：\n所有代码均可在 VS Code 的 Jupyter 环境中直接运行。\n本节通过 Python 函数计算债券价格、麦考利久期与修正久期，并验证价格–利率的线性近似关系。\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\n# 支持中文\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n\ndef price_bond(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    return np.sum(cashflows * discount_factors)\n\ndef macaulay_duration(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    pv_cashflows = cashflows * discount_factors\n    weights = pv_cashflows / np.sum(pv_cashflows)\n    time = np.arange(1, periods+1) / freq\n    return np.sum(weights * time)\n\ndef modified_duration(face, coupon_rate, ytm, maturity, freq=1):\n    D_mac = macaulay_duration(face, coupon_rate, ytm, maturity, freq)\n    return D_mac / (1 + ytm/freq)\n\nface, coupon_rate, maturity = 1000, 0.05, 5\nytms = np.linspace(0.02, 0.08, 30)\nprices = [price_bond(face, coupon_rate, y, maturity) for y in ytms]\nD_mac = macaulay_duration(face, coupon_rate, 0.05, maturity)\nD_mod = modified_duration(face, coupon_rate, 0.05, maturity)\nprint(f'麦考利久期 D_mac = {D_mac:.2f} 年')\nprint(f'修正久期 D_mod = {D_mod:.2f} 年')\nplt.figure(figsize=(8,5))\nplt.plot(ytms*100, prices, color='black')\nplt.title('债券价格与市场利率的关系')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('债券价格 (元)')\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n麦考利久期 D_mac = 4.55 年\n修正久期 D_mod = 4.33 年",
     "crumbs": [
       "**债券估值**",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>债券久期 Python 实操讲义（Part 1）</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>久期：Python 实操 1</span>"
     ]
   },
   {
-    "objectID": "body/bond_duration_python_part_1.html#模块-2.-投资组合久期与免疫策略",
-    "href": "body/bond_duration_python_part_1.html#模块-2.-投资组合久期与免疫策略",
-    "title": "3  债券久期 Python 实操讲义（Part 1）",
-    "section": "3.2 模块 2. 投资组合久期与免疫策略",
-    "text": "3.2 模块 2. 投资组合久期与免疫策略\n本节演示如何构建满足 \\(D_p = D_L\\) 的资产组合，从而实现久期免疫。\n\nD_A, D_B, D_L = 4.5, 12, 8\nw = (D_B - D_L) / (D_B - D_A)\nprint(f'为实现久期免疫: 投资于短期债券 A 的权重 w = {w:.3f}')\nprint(f'投资于长期债券 B 的权重 1-w = {1-w:.3f}')\ndef pv(value, duration, delta_y):\n    return value * (1 - duration * delta_y)\ny_changes = np.linspace(-0.01, 0.01, 21)\nE = []\nfor dy in y_changes:\n    A_val = pv(100, w*D_A+(1-w)*D_B, dy)\n    L_val = pv(100, D_L, dy)\n    E.append(A_val - L_val)\nplt.figure(figsize=(8,5))\nplt.plot(y_changes*100, E, color='blue', lw=2)\nplt.axhline(0, color='black', linestyle='--')\nplt.title('利率变动下的净值变化 (久期免疫示例)')\nplt.xlabel('利率变动 (bp)')\nplt.ylabel('净值变化 (亿元)')\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n为实现久期免疫: 投资于短期债券 A 的权重 w = 0.533\n投资于长期债券 B 的权重 1-w = 0.467",
+    "objectID": "body/bond_duration_python_part_1.html#投资组合久期与免疫策略",
+    "href": "body/bond_duration_python_part_1.html#投资组合久期与免疫策略",
+    "title": "3  久期：Python 实操 1",
+    "section": "3.2 投资组合久期与免疫策略",
+    "text": "3.2 投资组合久期与免疫策略\n本节演示如何构建满足 \\(D_p = D_L\\) 的资产组合，从而实现久期免疫。\n\nD_A, D_B, D_L = 4.5, 12, 8\nw = (D_B - D_L) / (D_B - D_A)\nprint(f'为实现久期免疫: 投资于短期债券 A 的权重 w = {w:.3f}')\nprint(f'投资于长期债券 B 的权重 1-w = {1-w:.3f}')\ndef pv(value, duration, delta_y):\n    return value * (1 - duration * delta_y)\ny_changes = np.linspace(-0.01, 0.01, 21)\nE = []\nfor dy in y_changes:\n    A_val = pv(100, w*D_A+(1-w)*D_B, dy)\n    L_val = pv(100, D_L, dy)\n    E.append(A_val - L_val)\nplt.figure(figsize=(8,5))\nplt.plot(y_changes*100, E, color='blue', lw=2)\nplt.axhline(0, color='black', linestyle='--')\nplt.title('利率变动下的净值变化 (久期免疫示例)')\nplt.xlabel('利率变动 (bp)')\nplt.ylabel('净值变化 (亿元)')\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n为实现久期免疫: 投资于短期债券 A 的权重 w = 0.533\n投资于长期债券 B 的权重 1-w = 0.467",
     "crumbs": [
       "**债券估值**",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>债券久期 Python 实操讲义（Part 1）</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>久期：Python 实操 1</span>"
     ]
   },
   {
-    "objectID": "body/bond_duration_python_part_1.html#模块-3.-主动久期策略模拟",
-    "href": "body/bond_duration_python_part_1.html#模块-3.-主动久期策略模拟",
-    "title": "3  债券久期 Python 实操讲义（Part 1）",
-    "section": "3.3 模块 3. 主动久期策略模拟",
-    "text": "3.3 模块 3. 主动久期策略模拟\n通过调整投资组合久期 (D)，观察利率变化下的收益放大效应。\n\nD_bench, D_active = 4.5, 7.0\nrate_changes = np.linspace(-0.01, 0.01, 21)\nbench_returns = -D_bench * rate_changes\nactive_returns = -D_active * rate_changes\nplt.figure(figsize=(8,5))\nplt.plot(rate_changes*100, bench_returns*100, label='基准组合 (D=4.5)')\nplt.plot(rate_changes*100, active_returns*100, label='主动组合 (D=7.0)', linestyle='--')\nplt.axvline(0, color='black', lw=0.8)\nplt.title('主动久期策略收益模拟')\nplt.xlabel('利率变动 (%)')\nplt.ylabel('价格变化 (%)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nΔy = -0.005\nexcess = (D_active - D_bench)*(-Δy)*100\nprint(f'若利率下降 50bp，主动组合的超额收益约为 {excess:.2f}%')\n\n\n\n\n\n\n\n\n若利率下降 50bp，主动组合的超额收益约为 1.25%",
+    "objectID": "body/bond_duration_python_part_1.html#主动久期策略模拟",
+    "href": "body/bond_duration_python_part_1.html#主动久期策略模拟",
+    "title": "3  久期：Python 实操 1",
+    "section": "3.3 主动久期策略模拟",
+    "text": "3.3 主动久期策略模拟\n通过调整投资组合久期 (D)，观察利率变化下的收益放大效应。\n\nD_bench, D_active = 4.5, 7.0\nrate_changes = np.linspace(-0.01, 0.01, 21)\nbench_returns = -D_bench * rate_changes\nactive_returns = -D_active * rate_changes\nplt.figure(figsize=(8,5))\nplt.plot(rate_changes*100, bench_returns*100, label='基准组合 (D=4.5)')\nplt.plot(rate_changes*100, active_returns*100, label='主动组合 (D=7.0)', linestyle='--')\nplt.axvline(0, color='black', lw=0.8)\nplt.title('主动久期策略收益模拟')\nplt.xlabel('利率变动 (%)')\nplt.ylabel('价格变化 (%)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nΔy = -0.005\nexcess = (D_active - D_bench)*(-Δy)*100\nprint(f'若利率下降 50bp，主动组合的超额收益约为 {excess:.2f}%')\n\n\n\n\n\n\n\n\n若利率下降 50bp，主动组合的超额收益约为 1.25%",
     "crumbs": [
       "**债券估值**",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>债券久期 Python 实操讲义（Part 1）</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>久期：Python 实操 1</span>"
     ]
   },
   {
     "objectID": "body/bond_duration_python_part_2.html",
     "href": "body/bond_duration_python_part_2.html",
-    "title": "4  债券久期：Python 实操 II",
+    "title": "4  久期：Python 实操 2",
     "section": "",
-    "text": "4.1 模块 4. 利率风险管理与久期缺口分析（银行 ALM 案例）\n本讲涵盖以下模块：\n所有代码均可直接在 VS Code 的 Jupyter Notebook 中运行。\n本节演示银行如何利用久期缺口 (DG) 衡量净值对利率变化的敏感度，并通过可视化展示不同 DG 水平下净值的变动。\nimport numpy as np\nimport matplotlib.pyplot as plt\n# 支持中文\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n\nA, L = 100, 90\nE0 = A - L\nDG_list = [0, 3, 6]\nr = np.linspace(0.03, 0.08, 101)\nresults = {}\nfor DG in DG_list:\n    dE = -DG * (r - 0.05) * (A/E0)\n    E = E0 * (1 + dE)\n    results[DG] = E\nplt.figure(figsize=(6,4))\nfor DG, E in results.items():\n    plt.plot(r*100, E, lw=2, label=f'DG = {DG}')\nplt.title('久期缺口与银行净值对利率变化的敏感度')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('银行净值 E (亿元)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nprint('当利率上升 1% 时:')\nfor DG in DG_list:\n    dE = -DG * 0.01 * (A/E0)\n    print(f'  DG={DG} → 净值变化约 {dE*100:.1f}%')\n\n\n\n\n\n\n\n\n当利率上升 1% 时:\n  DG=0 → 净值变化约 0.0%\n  DG=3 → 净值变化约 -30.0%\n  DG=6 → 净值变化约 -60.0%",
+    "text": "4.1 利率风险管理与久期缺口分析\n本讲涵盖以下模块：\n所有代码均可直接在 VS Code 的 Jupyter Notebook 中运行。\n本节演示银行如何利用久期缺口 (DG) 衡量净值对利率变化的敏感度，并通过可视化展示不同 DG 水平下净值的变动。\nimport numpy as np\nimport matplotlib.pyplot as plt\n# 支持中文\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n\nA, L = 100, 90\nE0 = A - L\nDG_list = [0, 3, 6]\nr = np.linspace(0.03, 0.08, 101)\nresults = {}\nfor DG in DG_list:\n    dE = -DG * (r - 0.05) * (A/E0)\n    E = E0 * (1 + dE)\n    results[DG] = E\nplt.figure(figsize=(6,4))\nfor DG, E in results.items():\n    plt.plot(r*100, E, lw=2, label=f'DG = {DG}')\nplt.title('久期缺口与银行净值对利率变化的敏感度')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('银行净值 E (亿元)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nprint('当利率上升 1% 时:')\nfor DG in DG_list:\n    dE = -DG * 0.01 * (A/E0)\n    print(f'  DG={DG} → 净值变化约 {dE*100:.1f}%')\n\n\n\n\n\n\n\n\n当利率上升 1% 时:\n  DG=0 → 净值变化约 0.0%\n  DG=3 → 净值变化约 -30.0%\n  DG=6 → 净值变化约 -60.0%",
     "crumbs": [
       "**债券估值**",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>债券久期：Python 实操 II</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>久期：Python 实操 2</span>"
     ]
   },
   {
-    "objectID": "body/bond_duration_python_part_2.html#模块-5.-含权债券的有效久期计算",
-    "href": "body/bond_duration_python_part_2.html#模块-5.-含权债券的有效久期计算",
-    "title": "4  债券久期：Python 实操 II",
-    "section": "4.2 模块 5. 含权债券的有效久期计算",
-    "text": "4.2 模块 5. 含权债券的有效久期计算\n有效久期 \\(D_{Eff}\\) 衡量含权债券价格对利率变化的平均敏感度。由于发行人可能在利率下降时提前赎回，含权债券的价格变化往往不对称。\n\nP0, Δy = 100, 0.01\nP_minus, P_plus = 105, 95\nD_eff = (P_minus - P_plus) / (2 * P0 * Δy)\nprint(f'有效久期 D_eff = {D_eff:.2f} 年')\nprint('含权债券的有效久期低于普通债券, 因为价格对利率变化的反应不对称。')\ny = np.linspace(0.02, 0.08, 20)\nP_no_option = 100 * (1 - 5 * (y - 0.05))\nP_callable = 100 * (1 - 3.5 * (y - 0.05))\nP_callable[P_callable&gt;105] = 105\nplt.figure(figsize=(8,5))\nplt.plot(y*100, P_no_option, label='无赎回债券', color='black')\nplt.plot(y*100, P_callable, label='可赎回债券', color='red', linestyle='--')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('债券价格 (元)')\nplt.title('含权债券的有效久期与价格反应不对称性')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n有效久期 D_eff = 5.00 年\n含权债券的有效久期低于普通债券, 因为价格对利率变化的反应不对称。",
+    "objectID": "body/bond_duration_python_part_2.html#含权债券的有效久期计算",
+    "href": "body/bond_duration_python_part_2.html#含权债券的有效久期计算",
+    "title": "4  久期：Python 实操 2",
+    "section": "4.2 含权债券的有效久期计算",
+    "text": "4.2 含权债券的有效久期计算\n有效久期 \\(D_{Eff}\\) 衡量含权债券价格对利率变化的平均敏感度。由于发行人可能在利率下降时提前赎回，含权债券的价格变化往往不对称。\n\nP0, Δy = 100, 0.01\nP_minus, P_plus = 105, 95\nD_eff = (P_minus - P_plus) / (2 * P0 * Δy)\nprint(f'有效久期 D_eff = {D_eff:.2f} 年')\nprint('含权债券的有效久期低于普通债券, 因为价格对利率变化的反应不对称。')\ny = np.linspace(0.02, 0.08, 20)\nP_no_option = 100 * (1 - 5 * (y - 0.05))\nP_callable = 100 * (1 - 3.5 * (y - 0.05))\nP_callable[P_callable&gt;105] = 105\nplt.figure(figsize=(8,5))\nplt.plot(y*100, P_no_option, label='无赎回债券', color='black')\nplt.plot(y*100, P_callable, label='可赎回债券', color='red', linestyle='--')\nplt.xlabel('市场利率 (%)')\nplt.ylabel('债券价格 (元)')\nplt.title('含权债券的有效久期与价格反应不对称性')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n有效久期 D_eff = 5.00 年\n含权债券的有效久期低于普通债券, 因为价格对利率变化的反应不对称。",
     "crumbs": [
       "**债券估值**",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>债券久期：Python 实操 II</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>久期：Python 实操 2</span>"
     ]
   },
   {
-    "objectID": "body/bond_duration_python_part_2.html#模块-6.-使用-akshare-获取中国国债收益率并计算久期",
-    "href": "body/bond_duration_python_part_2.html#模块-6.-使用-akshare-获取中国国债收益率并计算久期",
-    "title": "4  债券久期：Python 实操 II",
-    "section": "4.3 模块 6. 使用 AkShare 获取中国国债收益率并计算久期",
-    "text": "4.3 模块 6. 使用 AkShare 获取中国国债收益率并计算久期\n本节演示如何使用 AkShare 获取中国国债收益率数据，并计算不同期限债券的久期示意。\n\nimport akshare as ak\ntry:\n    yield_curve = ak.bond_zh_us_rate()\n    print('数据示例:')\n    print(yield_curve.head())\nexcept Exception as e:\n    print('未能成功访问 AkShare 接口, 请检查网络或数据源:', e)\nmaturity = np.array([2, 5, 10])\nyield_rate = np.array([0.025, 0.03, 0.035])\nD_zcb = maturity\nD_coupon = maturity - 0.5 * (maturity/10)\nplt.figure(figsize=(8,5))\nplt.plot(maturity, D_zcb, 'o-', label='零息债券久期')\nplt.plot(maturity, D_coupon, 's--', label='息票债券久期')\nplt.title('中国市场不同期限国债的久期比较 (示意)')\nplt.xlabel('到期期限 (年)')\nplt.ylabel('久期 (年)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nprint('结果说明: 零息债券久期等于到期时间, 而息票债券久期较短, 因为提前收到现金流。')\n\n\n\n\n数据示例:\n           日期  中国国债收益率2年  中国国债收益率5年  中国国债收益率10年  中国国债收益率30年  中国国债收益率10年-2年  \\\n0  1990-12-19        NaN        NaN         NaN         NaN            NaN   \n1  1990-12-20        NaN        NaN         NaN         NaN            NaN   \n2  1990-12-21        NaN        NaN         NaN         NaN            NaN   \n3  1990-12-24        NaN        NaN         NaN         NaN            NaN   \n4  1990-12-26        NaN        NaN         NaN         NaN            NaN   \n\n   中国GDP年增率  美国国债收益率2年  美国国债收益率5年  美国国债收益率10年  美国国债收益率30年  美国国债收益率10年-2年  \\\n0       NaN       7.21       7.64        8.00        8.19           0.79   \n1       NaN       7.25       7.67        8.05        8.22           0.80   \n2       NaN       7.30       7.75        8.11        8.28           0.81   \n3       NaN       7.35       7.84        8.20        8.36           0.85   \n4       NaN       7.27       7.78        8.15        8.30           0.88   \n\n   美国GDP年增率  \n0       NaN  \n1       NaN  \n2       NaN  \n3       NaN  \n4       NaN  \n\n\n\n\n\n\n\n\n\n结果说明: 零息债券久期等于到期时间, 而息票债券久期较短, 因为提前收到现金流。",
+    "objectID": "body/bond_duration_python_part_2.html#使用-akshare-获取中国国债收益率并计算久期",
+    "href": "body/bond_duration_python_part_2.html#使用-akshare-获取中国国债收益率并计算久期",
+    "title": "4  久期：Python 实操 2",
+    "section": "4.3 使用 AkShare 获取中国国债收益率并计算久期",
+    "text": "4.3 使用 AkShare 获取中国国债收益率并计算久期\n本节演示如何使用 AkShare 获取中国国债收益率数据，并计算不同期限债券的久期示意。\n\nimport akshare as ak\ntry:\n    yield_curve = ak.bond_zh_us_rate()\n    print('数据示例:')\n    print(yield_curve.head())\nexcept Exception as e:\n    print('未能成功访问 AkShare 接口, 请检查网络或数据源:', e)\nmaturity = np.array([2, 5, 10])\nyield_rate = np.array([0.025, 0.03, 0.035])\nD_zcb = maturity\nD_coupon = maturity - 0.5 * (maturity/10)\nplt.figure(figsize=(8,5))\nplt.plot(maturity, D_zcb, 'o-', label='零息债券久期')\nplt.plot(maturity, D_coupon, 's--', label='息票债券久期')\nplt.title('中国市场不同期限国债的久期比较 (示意)')\nplt.xlabel('到期期限 (年)')\nplt.ylabel('久期 (年)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\nprint('结果说明: 零息债券久期等于到期时间, 而息票债券久期较短, 因为提前收到现金流。')\n\n\n\n\n数据示例:\n           日期  中国国债收益率2年  中国国债收益率5年  中国国债收益率10年  中国国债收益率30年  中国国债收益率10年-2年  \\\n0  1990-12-19        NaN        NaN         NaN         NaN            NaN   \n1  1990-12-20        NaN        NaN         NaN         NaN            NaN   \n2  1990-12-21        NaN        NaN         NaN         NaN            NaN   \n3  1990-12-24        NaN        NaN         NaN         NaN            NaN   \n4  1990-12-26        NaN        NaN         NaN         NaN            NaN   \n\n   中国GDP年增率  美国国债收益率2年  美国国债收益率5年  美国国债收益率10年  美国国债收益率30年  美国国债收益率10年-2年  \\\n0       NaN       7.21       7.64        8.00        8.19           0.79   \n1       NaN       7.25       7.67        8.05        8.22           0.80   \n2       NaN       7.30       7.75        8.11        8.28           0.81   \n3       NaN       7.35       7.84        8.20        8.36           0.85   \n4       NaN       7.27       7.78        8.15        8.30           0.88   \n\n   美国GDP年增率  \n0       NaN  \n1       NaN  \n2       NaN  \n3       NaN  \n4       NaN  \n\n\n\n\n\n\n\n\n\n结果说明: 零息债券久期等于到期时间, 而息票债券久期较短, 因为提前收到现金流。",
     "crumbs": [
       "**债券估值**",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>债券久期：Python 实操 II</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>久期：Python 实操 2</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_3.html",
+    "href": "body/bond_duration_python_part_3.html",
+    "title": "5  久期：Python 实操 3",
+    "section": "",
+    "text": "5.1 模块 7. 交互式久期模拟\n本讲内容包括：\n本部分旨在帮助学生建立对利率变动与债券价格动态关系的直观理解。\n本节通过交互式滑块，动态演示利率变动下债券价格的非线性变化。 需要安装 ipywidgets 包 (pip install ipywidgets)。\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom ipywidgets import interact\n\n# 中文支持\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n\ndef bond_price(face, coupon_rate, ytm, maturity, freq=1):\n    \"\"\"计算债券价格\"\"\"\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    return np.sum(cashflows * discount_factors)\n\ndef plot_price_curve(face=1000, coupon=0.05, maturity=5):\n    \"\"\"绘制固定坐标范围的债券价格-利率曲线\"\"\"\n    # 每次绘图前新建画布，防止重复输出\n    plt.figure(figsize=(5,3))\n    \n    rates = np.linspace(0.01, 0.10, 50)\n    prices = [bond_price(face, coupon, y, maturity) for y in rates]\n    \n    plt.plot(rates*100, prices, color='blue', lw=2)\n    plt.title(f'债券价格-利率曲线 (票息={coupon*100:.1f}%, 到期={maturity}年)')\n    plt.xlabel('市场利率 (%)')\n    plt.ylabel('债券价格 (元)')\n    \n    # 添加面值水平线\n    plt.axhline(y=face, color='red', linestyle='--', lw=1.5, label='面值 (Face Value)')\n    \n    # 固定坐标范围\n    plt.xlim(1, 10)\n    plt.ylim(face * 0.8, face * 1.2)\n    \n    plt.legend()\n    plt.grid(True, linestyle='--', alpha=0.6)\n    #plt.show()\n\ninteract(plot_price_curve, face=(500,2000,100), coupon=(0.01,0.1,0.01), maturity=(1,10,1));",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>久期：Python 实操 3</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_3.html#模块-8.-期限结构与凸性分析",
+    "href": "body/bond_duration_python_part_3.html#模块-8.-期限结构与凸性分析",
+    "title": "5  久期：Python 实操 3",
+    "section": "5.2 模块 8. 期限结构与凸性分析",
+    "text": "5.2 模块 8. 期限结构与凸性分析\n久期提供一阶近似，而凸性 (Convexity) 反映价格曲线的弯曲程度。 两者结合可以更准确地估计债券价格变动：\n\\[ \\nabla P / P \\approx -D_{mod} \\Delta y + 0.5 C (\\Delta y)^2 \\]\n\ndef convexity(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    pv_cf = cashflows * discount_factors\n    time = np.arange(1, periods+1) / freq\n    return np.sum(pv_cf * time * (time + 1/freq)) / (np.sum(pv_cf) * (1 + ytm/freq)**2)\n\nface, coupon, ytm, maturity = 1000, 0.05, 0.05, 5\ndef macaulay_duration(face, coupon_rate, ytm, maturity, freq=1):\n    periods = int(maturity * freq)\n    coupon = face * coupon_rate / freq\n    cashflows = np.repeat(coupon, periods)\n    cashflows[-1] += face\n    discount_factors = 1 / (1 + ytm/freq) ** np.arange(1, periods+1)\n    pv_cashflows = cashflows * discount_factors\n    weights = pv_cashflows / np.sum(pv_cashflows)\n    time = np.arange(1, periods+1) / freq\n    return np.sum(weights * time)\n\nD_mod = macaulay_duration(face, coupon, ytm, maturity) / (1 + ytm)\nC = convexity(face, coupon, ytm, maturity)\nΔy = np.linspace(-0.02, 0.02, 41)\nΔP_lin = -D_mod * Δy\nΔP_quad = -D_mod * Δy + 0.5 * C * Δy**2\nplt.figure(figsize=(8,5))\nplt.plot(Δy*100, ΔP_lin*100, label='线性近似 (仅久期)')\nplt.plot(Δy*100, ΔP_quad*100, label='包含凸性修正', linestyle='--')\nplt.title('价格变动的久期与凸性近似比较')\nplt.xlabel('利率变化 (%)')\nplt.ylabel('价格变化 (%)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>久期：Python 实操 3</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_3.html#模块-9.-综合案例久期管理策略比较",
+    "href": "body/bond_duration_python_part_3.html#模块-9.-综合案例久期管理策略比较",
+    "title": "5  久期：Python 实操 3",
+    "section": "5.3 模块 9. 综合案例：久期管理策略比较",
+    "text": "5.3 模块 9. 综合案例：久期管理策略比较\n我们比较三种久期管理策略在不同利率环境下的净值表现： 1. 被动策略：固定久期 4 年； 2. 主动策略：预判利率下降，提升久期至 8 年； 3. 免疫策略：匹配负债久期 6 年，保持净值稳定。\n\nimport pandas as pd\nrate_changes = np.linspace(-0.02, 0.02, 41)\nD_passive, D_active, D_immune = 4, 8, 6\nreturns = pd.DataFrame({\n    'Passive': -D_passive * rate_changes,\n    'Active': -D_active * rate_changes,\n    'Immunized': -D_immune * rate_changes * 0.2  # 稳定型策略\n})\nreturns.plot(figsize=(8,5), lw=2)\nplt.title('不同久期管理策略的收益比较')\nplt.xlabel('利率变化 (%)')\nplt.ylabel('组合价值变动 (%)')\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>久期：Python 实操 3</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_4.html",
+    "href": "body/bond_duration_python_part_4.html",
+    "title": "6  久期：Python 实操 4",
+    "section": "",
+    "text": "6.1 模块 10. 实际数据验证：中国债券市场久期估算\n本讲主要包括：\n本部分将真实市场数据与理论模型结合，用于课堂演示与学生练习。\n通过 AkShare 获取中国国债收益率曲线，并估算不同期限国债的久期与价格敏感性。\nimport akshare as ak\nimport numpy as np\nimport matplotlib.pyplot as plt\n# 中文支持\nplt.rcParams['font.sans-serif'] = ['SimHei']\nplt.rcParams['axes.unicode_minus'] = False\n# 获取中国国债收益率曲线数据\ntry:\n    yield_curve = ak.bond_china_yield()  # 国债收益率曲线数据\n    print('中国国债收益率曲线数据示例：')\n    display(yield_curve.head())\nexcept Exception as e:\n    print('未能成功访问 AkShare 接口，请检查网络或数据源:', e)\n\n# 构造示例数据\nmaturity = np.array([1, 3, 5, 7, 10])\nyield_rate = np.array([0.025, 0.027, 0.030, 0.033, 0.035])\nduration = maturity * (1 - 0.1 * np.log1p(maturity))\nplt.figure(figsize=(8,5))\nplt.plot(maturity, yield_rate*100, 'o-', label='收益率曲线')\nplt.twinx()\nplt.plot(maturity, duration, 's--', color='red', label='估算久期')\nplt.title('中国国债收益率与久期示意图')\nplt.xlabel('期限 (年)')\nplt.ylabel('收益率 / 久期')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n中国国债收益率曲线数据示例：\n\n\n\n\n\n\n\n\n\n曲线名称\n日期\n3月\n6月\n1年\n3年\n5年\n7年\n10年\n30年\n\n\n\n\n0\n中债中短期票据收益率曲线(AAA)\n2020-02-04\n2.8939\n2.8998\n2.9158\n3.1970\n3.4503\n3.7153\n3.9597\nNaN\n\n\n1\n中债商业银行普通债收益率曲线(AAA)\n2020-02-04\n2.7215\n2.7370\n2.8042\n2.9979\n3.3120\n3.5849\n3.8158\n4.2435\n\n\n2\n中债国债收益率曲线\n2020-02-04\n1.7475\n1.7630\n2.1000\n2.4056\n2.6399\n2.7906\n2.8551\n3.4488\n\n\n3\n中债国债收益率曲线\n2020-02-05\n1.7475\n1.7667\n2.0773\n2.4264\n2.6348\n2.7893\n2.8440\n3.4460\n\n\n4\n中债中短期票据收益率曲线(AAA)\n2020-02-05\n2.7991\n2.8975\n2.9118\n3.1949\n3.4609\n3.7157\n3.9601\nNaN\n说明：",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>久期：Python 实操 4</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_4.html#模块-10.-实际数据验证中国债券市场久期估算",
+    "href": "body/bond_duration_python_part_4.html#模块-10.-实际数据验证中国债券市场久期估算",
+    "title": "6  久期：Python 实操 4",
+    "section": "",
+    "text": "ak.bond_china_yield() 是获取中国债券收益率曲线的接口。若你需要指定起始／结束日期，可查阅当前版本文档查看是否支持 start_date、end_date 参数。\n代码中假设列名为 \"期限(年)\" 和 \"收益率(%)\"，实际可能不同，请运行 print(df.columns) 检查并修改。\n此处将”估算久期”简化为 到期期限 × 0.9，仅用于教学演示。若你有准确久期模型，可替换该假设。\n绘图中采用双 Y 轴：左轴为收益率（蓝色）、右轴为估算久期（红色），帮助学生直观理解”到期期限 → 久期”及其与收益率关系。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>久期：Python 实操 4</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_4.html#模块-11.-风险分解与敏感度分析",
+    "href": "body/bond_duration_python_part_4.html#模块-11.-风险分解与敏感度分析",
+    "title": "6  久期：Python 实操 4",
+    "section": "6.2 模块 11. 风险分解与敏感度分析",
+    "text": "6.2 模块 11. 风险分解与敏感度分析\n在组合管理中，久期只是利率风险的第一层。我们可以进一步分解风险来源： - 平行移动风险：整体收益率曲线平移； - 陡峭化风险：短端与长端利率变化不同步； - 曲率变化风险：中部利率变化导致曲率变化。\n\nimport pandas as pd\nmaturity = np.array([1, 3, 5, 10])\nweights = np.array([0.3, 0.3, 0.2, 0.2])\nduration = np.array([0.9, 2.8, 4.5, 8.5])\nexposure = weights * duration\ndf = pd.DataFrame({'期限': maturity, '权重': weights, '久期': duration, '久期贡献': exposure})\ndisplay(df)\nprint(f'组合总久期 = {exposure.sum():.2f} 年')\n\n# 模拟平行移动 vs 陡峭化\nΔy_parallel = np.repeat(0.005, 4)\nΔy_steep = np.array([0.002, 0.003, 0.006, 0.008])\nΔP_parallel = -duration * Δy_parallel\nΔP_steep = -duration * Δy_steep\nplt.figure(figsize=(8,5))\nplt.plot(maturity, ΔP_parallel*100, 'o-', label='平行移动')\nplt.plot(maturity, ΔP_steep*100, 's--', label='陡峭化变化')\nplt.title('收益率曲线形态变化对不同期限债券的影响')\nplt.xlabel('期限 (年)')\nplt.ylabel('价格变化 (%)')\nplt.legend()\nplt.grid(True, linestyle='--', alpha=0.6)\nplt.show()\n\n\n\n\n\n\n\n\n期限\n权重\n久期\n久期贡献\n\n\n\n\n0\n1\n0.3\n0.9\n0.27\n\n\n1\n3\n0.3\n2.8\n0.84\n\n\n2\n5\n0.2\n4.5\n0.90\n\n\n3\n10\n0.2\n8.5\n1.70\n\n\n\n\n\n\n\n组合总久期 = 3.71 年",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>久期：Python 实操 4</span>"
+    ]
+  },
+  {
+    "objectID": "body/bond_duration_python_part_4.html#模块-12.-课堂练习与扩展案例",
+    "href": "body/bond_duration_python_part_4.html#模块-12.-课堂练习与扩展案例",
+    "title": "6  久期：Python 实操 4",
+    "section": "6.3 模块 12. 课堂练习与扩展案例",
+    "text": "6.3 模块 12. 课堂练习与扩展案例\n\n6.3.1 练习 1：久期匹配\n给定： - 资产久期 5 年； - 负债久期 8 年； - 可投资短期债券久期 2 年、长期债券久期 10 年。 请计算各自投资权重以实现久期免疫。\n\n\n6.3.2 练习 2：凸性调整\n编写函数，计算债券价格变动的二阶近似： \\[ ΔP/P = -D_{mod} Δy + 0.5C(Δy)^2 \\] 并验证在不同 Δy 下，久期与凸性联合估计的误差大小。\n\n\n6.3.3 练习 3：AkShare 拓展\n使用 AkShare 调用 bond_zh_us_rate() 数据，比较中国与美国国债收益率曲线差异。",
+    "crumbs": [
+      "**债券估值**",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>久期：Python 实操 4</span>"
     ]
   }
 ]
